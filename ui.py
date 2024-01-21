@@ -49,9 +49,5 @@ def ui():
     watermark_button = Button(text="Convert PDF", bg='#199999', highlightthickness=0, command=lambda: convert_pdf(select_language.get(), select_gender.get(), select_speed.get()))
     watermark_button.grid(column=0, row=2, pady=10)
     
-    # # save audio button 
-    # save_button = Button(text="Save Audio", highlightthickness=0)
-    # save_button.grid(column=2, row=4)
-    
     # keeps the app running all the time until it gets manually closed
     window.mainloop()
