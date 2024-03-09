@@ -4,7 +4,7 @@
 This is a simple application that converts PDF files to audio files (MP3) using the VoiceRSS API. The generated audio can be saved to a location of your choice.
 
 ## User Interface
-![Pdf to Audiobook]('files/image.png')
+![Pdf to Audiobook](/files/image.png)
 
 ## Features
 - Choose a PDF file for conversion.
