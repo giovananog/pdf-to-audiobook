@@ -5,6 +5,7 @@ import requests
 from dotenv import load_dotenv
 import shutil
 from pydub import AudioSegment
+import io
 
 def open_pdf():
     path = filedialog.askopenfilename()
@@ -20,21 +21,24 @@ def read_pdf():
             texto += pagina.extract_text()
     return texto
 
-
-def show_message():
+def show_message(arq):
     answer = messagebox.askquestion("PDF converted! ", "Save the audio?")
 
     if answer == "yes":
-        save_audio()
+        save_audio(arq)
         messagebox.showinfo(title='saved', message='audio saved')
 
-def gender_voice (gender, hl):
+def gender_voice(gender, hl):
     if gender == 'male':
-        if hl == 'en-us': return 'John'
-        else: return 'Dinis'
+        if hl == 'en-us':
+            return 'John'
+        else:
+            return 'Dinis'
     else:
-        if hl == 'en-us': return 'Amy'
-        else: return 'Marcia'
+        if hl == 'en-us':
+            return 'Amy'
+        else:
+            return 'Marcia'
 
 def convert_pdf(hl, v, r):
     load_dotenv()
@@ -54,21 +58,16 @@ def convert_pdf(hl, v, r):
     content = requests.get(url="http://api.voicerss.org/", params=parameters)
     content.raise_for_status()
     
-    with open('files/audio.mp3', 'wb') as arquivo_mp3:
+    output_file_path = 'files/audio.mp3'
+    
+    with open(output_file_path, 'wb') as arquivo_mp3:
         arquivo_mp3.write(content.content)
 
-    show_message()
+    show_message(output_file_path)
 
-# not working yet
-    
-# def save_audio():
-#     file_path = filedialog.asksaveasfilename(defaultextension=".mp3", filetypes=[("Arquivos MP3", "*.mp3")])
+def save_audio(audio_path):
+    output_file_path = filedialog.asksaveasfilename(defaultextension=".mp3", filetypes=[("MP3 files", "*.mp3")])
 
-#     # play(audio)
-#     if not file_path:
-#         return
+    if output_file_path:
+        shutil.copy2(audio_path, output_file_path)
 
-#     audio = AudioSegment.from_file("files/audio.mp3", format="mp3")
-#     audio.close()
-
-#     audio.export(file_path, format="mp3")
